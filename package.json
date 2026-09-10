@@ -1,1 +1,1 @@
-{"name":"hedge-markets","private":true,"version":"0.2.0","type":"module","scripts":{"start":"node --env-file-if-exists=.env server.mjs","test":"node --test test/*.test.mjs","set-builder":"node scripts/set-builder-code.mjs"},"engines":{"node":">=22"}}
+{"name":"hedge-markets","private":true,"version":"0.2.0","type":"module","scripts":{"start":"node --env-file-if-exists=.env server.mjs","test":"node --test test/*.test.mjs","set-builder":"node scripts/set-builder-code.mjs"},"engines":{"node":"22.x"}}

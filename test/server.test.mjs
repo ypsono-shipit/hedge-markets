@@ -1,6 +1,15 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {publicIP,websiteURL,analyzeHTML,quoteBuy,readWebsite} from '../server.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {publicIP,websiteURL,analyzeHTML,quoteBuy,readWebsite,allowedHost,allowedOrigin} from '../server.mjs';
 import {parseQuery,localPrior,sourceLabel,scoreMarket,suggestedSide,hedgeAdvice,marketSearches,elsewhereHedges} from '../entity.mjs';
 test('blocks local, private and metadata ranges',()=>{for(const ip of ['127.0.0.1','10.1.2.3','172.16.0.1','192.168.0.1','169.254.169.254','100.64.0.1','::1','::ffff:127.0.0.1'])assert.equal(publicIP(ip),false,ip);assert.equal(publicIP('1.1.1.1'),true)});
+test('allows local, Vercel and hedgemarkets.io hosts',()=>{
+  assert.equal(allowedHost('localhost:8080'),true);
+  assert.equal(allowedHost('hedgemarkets.io'),true);
+  assert.equal(allowedHost('www.hedgemarkets.io'),true);
+  assert.equal(allowedHost('hedge-markets-abc.vercel.app'),true);
+  assert.equal(allowedHost('evil.example'),false);
+  assert.equal(allowedOrigin('https://hedgemarkets.io'),true);
+  assert.equal(allowedOrigin('https://evil.example'),false);
+});
 test('rejects unsafe website schemes and credentials',()=>{for(const u of ['file:///etc/passwd','http://user:pass@example.com','https://example.com:22','http://service.local'])assert.throws(()=>websiteURL(u));assert.equal(websiteURL('example.com').href,'https://example.com/')});
 test('evidence comes from actual page text; scripts excluded',()=>{const a=analyzeHTML('<title>Actual Company</title><script>loan fuel import</script><p>Our company provides services to businesses across the city. We welcome enquiries and work with customers every day.</p>','https://example.com');assert.equal(a.name,'Actual Company');assert.equal(a.risks.find(r=>r.category==='Rates').selected,false);assert.equal(a.risks.find(r=>r.category==='Demand').selected,true)});
 test('quoteBuy walks asks and fills the dollar amount',()=>{

@@ -11,6 +11,14 @@ import {resolve,dirname} from 'node:path';
 import {gunzipSync,inflateSync,inflateRawSync,brotliDecompressSync} from 'node:zlib';
 const root=dirname(fileURLToPath(import.meta.url));
 const port=Number(process.env.PORT||8080);
+export function allowedHost(host){
+  const h=String(host||'').split(':')[0].toLowerCase();
+  return h==='localhost'||h==='127.0.0.1'||h==='hedgemarkets.io'||h==='www.hedgemarkets.io'||h.endsWith('.vercel.app');
+}
+export function allowedOrigin(origin){
+  if(!origin)return true;
+  try{return allowedHost(new URL(origin).hostname)}catch{return false}
+}
 export function publicIP(ip){if(net.isIP(ip)!==4)return false;const [a,b]=ip.split('.').map(Number);return !(a===0||a===10||a===127||a>=224||a===169&&b===254||a===172&&b>=16&&b<=31||a===192&&(b===168||b===0)||a===100&&b>=64&&b<=127||a===198&&(b===18||b===19));}
 export function websiteURL(raw){const u=new URL(raw.includes('://')?raw:'https://'+raw);if(!['http:','https:'].includes(u.protocol)||u.username||u.password||u.port&&!['80','443'].includes(u.port)||!u.hostname.includes('.')||u.hostname.endsWith('.local')||u.hostname.endsWith('.internal'))throw Error('Enter a public company website.');u.hash='';return u;}
 const pageHeaders={
@@ -126,7 +134,7 @@ async function quote(token,amount){
 }
 async function body(req){let b='';for await(const c of req){b+=c;if(b.length>30000)throw Error('Request too large.')}return JSON.parse(b||'{}')}
 const files=new Map([['/','index.html'],['/index.html','index.html'],['/app.js','app.js'],['/presets.json','presets.json']]);
-export const server=http.createServer(async(req,res)=>{const send=(status,obj)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(obj))};try{const host=req.headers.host;if(!['localhost:'+port,'127.0.0.1:'+port].includes(host))return send(403,{error:'Local access only.'});const u=new URL(req.url,'http://localhost:'+port);if(req.method==='POST'){const origin=req.headers.origin;if(origin&&!['http://localhost:'+port,'http://127.0.0.1:'+port].includes(origin))return send(403,{error:'Request origin rejected.'})}
+export default async function handle(req,res){const send=(status,obj)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(obj))};try{if(!allowedHost(req.headers.host))return send(403,{error:'Unknown host.'});const u=new URL(req.url,'http://localhost:'+port);if(req.method==='POST'){const origin=req.headers.origin;if(origin&&!allowedOrigin(origin))return send(403,{error:'Request origin rejected.'})}
 if(u.pathname==='/api/status'){const env=await config();return send(200,{marketData:'public',analysis:env.OPENROUTER_API_KEY?'openrouter':'not-configured',modelConfigured:Boolean(env.OPENROUTER_MODEL),automaticMatching:true,builderConfigured:/^0x[0-9a-fA-F]{64}$/.test(env.POLYMARKET_BUILDER_CODE||''),quotesEnabled:true,tradingEnabled:false})}
 if(u.pathname==='/api/analyze'&&req.method==='POST'){const b=await body(req);return send(200,await analyzeBusiness(b))}
 if(u.pathname==='/api/match'&&req.method==='POST'){const b=await body(req);return send(200,await matchAI(b))}
@@ -134,7 +142,8 @@ if(u.pathname==='/api/markets'&&req.method==='GET'){const q=(u.searchParams.get(
 if(u.pathname==='/api/book'&&req.method==='GET')return send(200,await book(u.searchParams.get('token')||''));
 if(u.pathname==='/api/quote'&&req.method==='GET')return send(200,await quote(u.searchParams.get('token')||'',u.searchParams.get('amount')||''));
 if(req.method!=='GET'||!files.has(u.pathname))return send(404,{error:'Not found.'});const f=files.get(u.pathname);res.writeHead(200,{'Content-Type':f.endsWith('.js')?'text/javascript':f.endsWith('.json')?'application/json':'text/html','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(await readFile(resolve(root,'public',f)));
-}catch(e){send(400,{error:e.message||'Unable to complete the request.'})}});
+}catch(e){send(400,{error:e.message||'Unable to complete the request.'})}}
+export const server=http.createServer(handle);
 if(process.argv[1]===fileURLToPath(import.meta.url))server.listen(port,'127.0.0.1',()=>console.log('Hedge Markets: http://localhost:'+port));
 
 async function analyzeAI(html,url,sector,country){const text=plain(html).slice(0,8000);if(text.length<80)throw Error('Not enough readable website text. Try the business’s About page.');const result=await modelJSON('Analyze a real SME website for possible fuel, freight, rates, tariffs and demand exposures. Never assert a loan or import dependence without evidence. Return {name:string,whatItDoes:string,risks:[{category:Fuel|Freight|Rates|Tariffs|Demand,reason:string,evidence:string,query:string}]}. At most five risks, one per category. evidence must be a short exact substring of the supplied text. query is a short Polymarket search for this business. Omit unsupported risks.',{url,sector,country,text},{timeout:25000,max_tokens:1200});const risks=(Array.isArray(result.risks)?result.risks:[]).filter(r=>rules.some(x=>x[0]===r.category)&&typeof r.evidence==='string'&&r.evidence.length>=8&&text.includes(r.evidence)&&typeof r.reason==='string'&&typeof r.query==='string').filter((r,i,a)=>a.findIndex(v=>v.category===r.category)===i).map(r=>({category:r.category,reason:r.reason.slice(0,500),evidence:r.evidence.slice(0,500),query:r.query.slice(0,100),selected:true}));return {name:String(result.name||new URL(url).hostname).slice(0,160),whatItDoes:String(result.whatItDoes||'').slice(0,400),url,sector,country,method:'openrouter',checkedAt:new Date().toISOString(),risks}}
