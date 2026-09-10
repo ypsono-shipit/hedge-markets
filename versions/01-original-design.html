@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Hedge Markets</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts allow-downloads" referrerpolicy="no-referrer" title="Hedge Markets" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Hedge Markets&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;style&gt;
+#hedge{--hm-bg:light-dark(#f7f6ef,#202923);--hm-paper:light-dark(#fffef9,#2b362e);--hm-ink:light-dark(#173b30,#eef4df);--hm-muted:light-dark(#677368,#adbdad);--hm-line:light-dark(#dce1d4,#48574b);--hm-accent:#d8ef85;font-family:&#x27;DM Sans&#x27;,Arial,sans-serif;color:var(--hm-ink);background:var(--hm-bg);border-radius:18px;overflow:hidden;font-size:14px;line-height:1.5}#hedge *{box-sizing:border-box}#hedge button,#hedge input,#hedge select{font:inherit}#hedge button{cursor:pointer}#hedge button:disabled{opacity:.5;cursor:default}#hedge h1,#hedge h2,#hedge h3,#hedge p{margin:0}#hedge h1{font-size:clamp(38px,5.7vw,62px);font-weight:500;line-height:1.04;letter-spacing:-3px}#hedge h2{font-size:34px;line-height:1.1;font-weight:500;letter-spacing:-1.3px}#hedge h3{font-size:18px;font-weight:500}#hedge .hm-nav{padding:22px 32px;display:flex;align-items:center;gap:28px;border-bottom:1px solid var(--hm-line)}#hedge .hm-brand{font-size:20px;letter-spacing:-.8px;font-weight:700;display:flex;gap:9px;align-items:center;margin-right:auto}#hedge .hm-logo{background:var(--hm-ink);color:var(--hm-bg);padding:0 7px;border-radius:6px;font-size:24px}#hedge .hm-nav button{background:none;border:0;color:var(--hm-muted);padding:8px 0}#hedge .hm-nav button.active{color:var(--hm-ink);box-shadow:0 2px var(--hm-ink)}#hedge .hm-demo{font-size:10px;letter-spacing:1px;border:1px solid var(--hm-line);border-radius:4px;padding:4px 7px}#hedge .hm-page{padding:40px 44px 32px}#hedge .hm-eyebrow{font-size:11px;letter-spacing:1.6px;font-weight:600;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:22px}#hedge .hm-dot{width:7px;height:7px;background:#73a759;border-radius:50%}#hedge .hm-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:25px;align-items:center}#hedge .hm-sub{color:var(--hm-muted);font-size:15px;max-width:360px;margin:22px 0}#hedge .hm-primary{border:0;border-radius:9px;background:var(--hm-ink);color:var(--hm-bg);padding:13px 20px;display:inline-flex;align-items:center;gap:24px}#hedge .hm-secondary{border:1px solid var(--hm-line);border-radius:9px;background:var(--hm-paper);color:var(--hm-ink);padding:11px 16px}#hedge .hm-note{font-size:11px;color:var(--hm-muted);margin-top:12px}#hedge .hm-art{height:325px;position:relative;background:#e9eedb;border-radius:50% 50% 12% 12%;isolation:isolate;color:#254333;overflow:hidden}#hedge .hm-cloud{position:absolute;width:70px;height:19px;border-radius:100%;background:#fffdf1;top:36px;left:45px;animation:hm-cloud 8s ease-in-out infinite}#hedge .hm-cloud:before{content:&#x27;&#x27;;position:absolute;width:35px;height:28px;border-radius:50%;background:inherit;left:20px;bottom:0}#hedge .hm-block{position:absolute;top:55px;width:57px;height:142px;background:repeating-linear-gradient(0deg,transparent 0 19px,#b9c4aa 20px 25px),repeating-linear-gradient(90deg,#d4ddc4 0 13px,#aab8a1 14px 20px);border:5px solid #d4ddc4;border-radius:5px}#hedge .hm-block.one{left:16px;transform:rotate(-4deg)}#hedge .hm-block.two{right:21px;top:28px;height:178px;width:65px;background-color:#cbd5b9}#hedge .hm-ground{position:absolute;bottom:0;height:95px;width:100%;background:#cfdbba;border-radius:50% 50% 0 0}#hedge .hm-shop{position:absolute;width:148px;height:128px;background:#fcf2d8;border:3px solid #355645;border-radius:7px;left:37px;top:126px;box-shadow:6px 8px 0 #a6b397;transform:rotate(-3deg)}#hedge .hm-shop.second{left:auto;right:23px;top:137px;width:145px;transform:rotate(4deg);background:#dce5dc}#hedge .hm-sign{text-align:center;background:#244c3c;color:#fff5d9;font-size:11px;letter-spacing:2px;padding:5px;font-weight:700}#hedge .hm-awning{height:28px;background:repeating-linear-gradient(90deg,#e98760 0 18px,#fff5dc 18px 36px);border-bottom:3px solid #355645;border-radius:0 0 9px 9px}#hedge .second .hm-awning{background:repeating-linear-gradient(90deg,#8fb8a5 0 18px,#fff5dc 18px 36px)}#hedge .hm-counter{position:absolute;bottom:0;left:0;right:0;height:24px;background:#dfaa76;border-top:3px solid #355645}#hedge .hm-person{position:absolute;bottom:23px;left:47px;width:43px;height:46px;background:#e9906f;border-radius:18px 18px 5px 5px;animation:hm-bob 2.6s ease-in-out infinite;transform-origin:bottom}#hedge .hm-head{width:48px;height:44px;background:#f4cfa0;border:2px solid #355645;border-radius:45%;position:absolute;top:-27px;left:-3px}#hedge .hm-head:before{content:&#x27;&#x27;;position:absolute;left:11px;top:21px;width:4px;height:5px;border-radius:50%;background:#274637;box-shadow:18px 0 #274637}#hedge .hm-head:after{content:&#x27;&#x27;;position:absolute;left:21px;top:29px;width:7px;height:4px;border-bottom:2px solid #274637;border-radius:50%}#hedge .hm-hat{position:absolute;width:49px;height:13px;background:#fffdf0;top:-33px;left:-4px;border:2px solid #355645;border-radius:12px 12px 0 0;z-index:1}#hedge .second .hm-person{background:#84a596;animation-delay:-1.3s}#hedge .second .hm-hat{background:#384d3c;height:16px}#hedge .hm-steam{position:absolute;bottom:33px;left:19px;color:#fcfcf2;font-size:27px;animation:hm-steam 2s infinite}#hedge .hm-pot{position:absolute;bottom:17px;left:13px;width:32px;height:18px;background:#5b7d71;border-radius:0 0 10px 10px;border:2px solid #355645}#hedge .hm-art-label{position:absolute;bottom:19px;left:23px;right:23px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:1px}#hedge .hm-bubble{position:absolute;top:79px;left:103px;background:#fffdf1;border-radius:15px 15px 15px 0;padding:8px 13px;font-size:12px;transform:rotate(-5deg);z-index:4;box-shadow:0 4px 0 #cbd4bc}#hedge .hm-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hm-line);margin-top:38px;padding-top:23px;gap:24px}#hedge .hm-strip span{color:var(--hm-muted);font-size:12px}#hedge .hm-strip b{display:block;font-size:13px;margin:7px 0;font-weight:500}#hedge .hm-bottom{padding:16px 32px;border-top:1px solid var(--hm-line);display:flex;justify-content:space-between;gap:12px;color:var(--hm-muted);font-size:10px}#hedge .hm-step{font-size:11px;color:var(--hm-muted);margin-bottom:28px;letter-spacing:.4px}#hedge .hm-split{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;margin-top:28px}#hedge .hm-panel{background:var(--hm-paper);padding:25px;border:1px solid var(--hm-line);border-radius:13px}#hedge label.hm-label{display:block;font-size:12px;margin:0 0 9px}#hedge input[type=text],#hedge select{display:block;width:100%;background:var(--hm-bg);border:1px solid var(--hm-line);color:var(--hm-ink);border-radius:8px;padding:13px;margin-bottom:22px;font-size:16px}#hedge .hm-panel .hm-primary{width:100%;justify-content:space-between}#hedge .hm-help{color:var(--hm-muted);font-size:13px;margin-top:12px}#hedge .hm-rule{border-top:1px solid var(--hm-line);margin:22px 0}#hedge .hm-risk{display:grid;grid-template-columns:24px 1fr auto;gap:12px;padding:17px 0;border-bottom:1px solid var(--hm-line);align-items:start}#hedge .hm-risk:first-child{padding-top:0}#hedge .hm-risk input{accent-color:#386446;width:17px;height:17px}#hedge .hm-risk p{font-size:12px;color:var(--hm-muted);margin-top:4px}#hedge .hm-tag{font-size:10px;background:var(--hm-bg);padding:4px 7px;border-radius:4px;white-space:nowrap}#hedge .hm-alert{background:light-dark(#efeacb,#46452e);border-radius:8px;padding:15px;font-size:12px;margin-top:20px}#hedge .hm-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:24px}#hedge .hm-machine{background:light-dark(#e3e9d9,#374635);border:1px solid var(--hm-line);border-radius:17px;padding:22px 21px 28px;position:relative}#hedge .hm-machine-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:1.5px;margin-bottom:19px}#hedge .hm-slot{height:13px;border-radius:8px;background:#17392c;box-shadow:inset 0 3px 4px #0008}#hedge .hm-receipt{background:#fffdf4;color:#2d3b31;margin:-5px 12px 0;padding:26px 21px 20px;box-shadow:0 8px 14px #203a2520;position:relative;transition:transform .6s,margin .6s;animation:hm-print .8s ease-out;clip-path:polygon(0 0,100% 0,100% 98%,95% 100%,90% 98%,85% 100%,80% 98%,75% 100%,70% 98%,65% 100%,60% 98%,55% 100%,50% 98%,45% 100%,40% 98%,35% 100%,30% 98%,25% 100%,20% 98%,15% 100%,10% 98%,5% 100%,0 98%);font-family:monospace;font-size:11px}#hedge .hm-receipt.torn{transform:rotate(-3deg) translateY(12px);margin-bottom:20px}#hedge .hm-receipt h3{text-align:center;font-family:monospace;font-size:20px;letter-spacing:-1px}#hedge .hm-receipt .hm-ticket-meta{text-align:center;font-size:10px;margin:9px 0 19px}#hedge .hm-ticket-line{border-top:1px dashed #adb6a3;padding:13px 0}#hedge .hm-ticket-line strong{font-size:11px;display:block;margin:3px 0}#hedge .hm-ticket-line p{color:#626b60;font-size:10px}#hedge .hm-side{float:right;color:#254e35;background:#e7efcf;padding:1px 5px}#hedge .hm-ticket-warning{border-top:1px dashed #8e9a83;padding-top:13px;font-size:10px}#hedge .hm-tear{width:100%;border:0;border-top:2px dashed #96a787;background:transparent;color:var(--hm-ink);padding:14px 0 0;margin-top:21px;font-size:12px}#hedge .hm-detail{margin-top:16px}#hedge summary{cursor:pointer;padding:13px 0;border-bottom:1px solid var(--hm-line);font-size:13px}#hedge details p{font-size:12px;color:var(--hm-muted);padding:12px 0}#hedge .hm-empty{text-align:center;padding:52px 15px}#hedge [hidden]{display:none!important}#hedge .hm-saved{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:15px}#hedge .hm-error{color:#bc553a;font-size:12px;margin-bottom:15px}#hedge .hm-link{background:none;border:0;text-decoration:underline;color:var(--hm-ink);padding:0;font-size:12px}#hedge.motion-off *{animation:none!important}@keyframes hm-bob{50%{transform:rotate(5deg) translateY(-3px)}}@keyframes hm-cloud{50%{transform:translateX(25px)}}@keyframes hm-steam{to{transform:translateY(-18px);opacity:0}}@keyframes hm-print{from{transform:translateY(-35px);opacity:.2}to{transform:translateY(0);opacity:1}}@media(prefers-reduced-motion:reduce){#hedge *{animation:none!important;transition:none!important}}@media(max-width:680px){#hedge .hm-nav{padding:18px;gap:16px;flex-wrap:wrap}#hedge .hm-brand{width:100%}#hedge .hm-page{padding:28px 22px}#hedge .hm-hero,#hedge .hm-split{grid-template-columns:1fr;gap:26px}#hedge .hm-art{max-width:400px;width:100%;margin:auto}#hedge .hm-strip{gap:12px}#hedge .hm-risk{grid-template-columns:24px 1fr}#hedge .hm-risk .hm-tag{grid-column:2;justify-self:start}#hedge .hm-bottom{flex-wrap:wrap;padding:16px 22px}#hedge .hm-saved{flex-wrap:wrap}}
+&lt;/style&gt;
+&lt;div id=&quot;hedge&quot; aria-label=&quot;Hedge Markets product mockup&quot;&gt;
+ &lt;header class=&quot;hm-nav&quot;&gt;&lt;div class=&quot;hm-brand&quot;&gt;&lt;span class=&quot;hm-logo&quot;&gt;h.&lt;/span&gt; hedge markets &lt;span class=&quot;hm-demo&quot;&gt;CONCEPT&lt;/span&gt;&lt;/div&gt;&lt;button data-page=&quot;home&quot; class=&quot;active&quot;&gt;Home&lt;/button&gt;&lt;button data-page=&quot;intake&quot;&gt;Make a ticket&lt;/button&gt;&lt;button data-page=&quot;saved&quot;&gt;My tickets &lt;span id=&quot;hm-count&quot;&gt;0&lt;/span&gt;&lt;/button&gt;&lt;/header&gt;
+ &lt;main id=&quot;hm-main&quot; aria-live=&quot;polite&quot;&gt;&lt;/main&gt;
+ &lt;footer class=&quot;hm-bottom&quot;&gt;&lt;span&gt;Built for the businesses that keep Singapore going.&lt;/span&gt;&lt;span&gt;Illustrative prototype · No live markets or trades&lt;/span&gt;&lt;/footer&gt;
+&lt;/div&gt;
+&lt;script&gt;
+(()=&gt;{const root=document.getElementById(&#x27;hedge&#x27;),main=root.querySelector(&#x27;#hm-main&#x27;);let company=&#x27;Kopi &amp; Co.&#x27;,url=&#x27;kopiandco.example&#x27;,sector=&#x27;Food &amp; beverage&#x27;,taken=false,page=&#x27;home&#x27;,selected=[true,true,true,false,false];const risks=[[&#x27;Fuel &amp; energy&#x27;,&#x27;Cooking gas and delivery costs may rise.&#x27;,&#x27;Likely&#x27;],[&#x27;Freight&#x27;,&#x27;Imported beans and supplies travel by sea.&#x27;,&#x27;Check with owner&#x27;],[&#x27;Interest rates&#x27;,&#x27;Loan repayments may rise if your rate floats.&#x27;,&#x27;Check with owner&#x27;],[&#x27;Tariffs&#x27;,&#x27;Import duties may affect your suppliers.&#x27;,&#x27;Unconfirmed&#x27;],[&#x27;Customer demand&#x27;,&#x27;Fewer visits could mean fewer cups sold.&#x27;,&#x27;Unconfirmed&#x27;]];
+const art=`&lt;div class=&quot;hm-art&quot; role=&quot;img&quot; aria-label=&quot;Animated chibi hawker and shopkeeper in a Singapore neighbourhood, with HDB blocks and striped shop awnings&quot;&gt;&lt;div class=&quot;hm-cloud&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-block one&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-block two&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-ground&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-bubble&quot;&gt;Small business. Big heart.&lt;/div&gt;&lt;div class=&quot;hm-shop&quot;&gt;&lt;div class=&quot;hm-sign&quot;&gt;KOPI &amp; CO.&lt;/div&gt;&lt;div class=&quot;hm-awning&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-person&quot;&gt;&lt;div class=&quot;hm-head&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-hat&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;hm-counter&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-steam&quot;&gt;〰&lt;/div&gt;&lt;div class=&quot;hm-pot&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;hm-shop second&quot;&gt;&lt;div class=&quot;hm-sign&quot;&gt;PROVISION SHOP&lt;/div&gt;&lt;div class=&quot;hm-awning&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-person&quot;&gt;&lt;div class=&quot;hm-head&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-hat&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;hm-counter&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;hm-art-label&quot;&gt;&lt;span&gt;YOUR NEIGHBOURHOOD,&lt;/span&gt;&lt;span&gt;A LITTLE MORE PREPARED.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;`;
+const sampleEvents=[[&#x27;FUEL&#x27;,&#x27;Brent oil above $100 on 31 Dec 2026?&#x27;,&#x27;YES&#x27;,&#x27;Oil can rise while your gas bill stays flat.&#x27;],[&#x27;FREIGHT&#x27;,&#x27;Suez traffic below 2025 levels in Q4 2026?&#x27;,&#x27;YES&#x27;,&#x27;Your shipping route may be unaffected.&#x27;],[&#x27;RATES&#x27;,&#x27;Fed cuts rates by 31 Dec 2026?&#x27;,&#x27;NO&#x27;,&#x27;US rates may diverge from your SGD loan.&#x27;]];
+function receipt(){return `&lt;div class=&quot;hm-machine&quot;&gt;&lt;div class=&quot;hm-machine-top&quot;&gt;&lt;span&gt;HEDGE TICKET / 001&lt;/span&gt;&lt;span&gt;● ${taken?&#x27;TAKEN&#x27;:&#x27;READY TO PULL&#x27;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;hm-slot&quot;&gt;&lt;/div&gt;&lt;div class=&quot;hm-receipt ${taken?&#x27;torn&#x27;:&#x27;&#x27;}&quot;&gt;&lt;h3&gt;hedge markets&lt;/h3&gt;&lt;div class=&quot;hm-ticket-meta&quot;&gt;A LITTLE PLAN FOR THE WHAT-IFS&lt;br&gt;&lt;br&gt;&lt;strong class=&quot;hm-company&quot;&gt;&lt;/strong&gt;&lt;br&gt;ILLUSTRATIVE • NOT LIVE MARKETS&lt;/div&gt;${sampleEvents.map((e,i)=&gt;`&lt;div class=&quot;hm-ticket-line&quot;&gt;&lt;span&gt;0${i+1} / ${e[0]}&lt;/span&gt;&lt;span class=&quot;hm-side&quot;&gt;BUY ${e[2]}&lt;/span&gt;&lt;strong&gt;${e[1]}&lt;/strong&gt;&lt;p&gt;${e[3]}&lt;/p&gt;&lt;/div&gt;`).join(&#x27;&#x27;)}&lt;div class=&quot;hm-ticket-warning&quot;&gt;&lt;b&gt;READ BEFORE YOU TAKE THIS.&lt;/b&gt;&lt;br&gt;Each contract settles at $1 or $0. You can lose your stake. A business loss does not guarantee a payout. Not insurance. Not a perfect hedge.&lt;br&gt;&lt;br&gt;Sample events only. Liquidity, price and resolution rules have not been checked.&lt;/div&gt;&lt;/div&gt;&lt;button class=&quot;hm-tear&quot; id=&quot;hm-tear&quot; ${taken?&#x27;disabled&#x27;:&#x27;&#x27;}&gt;${taken?&#x27;✓ Ticket taken — list saved in this session&#x27;:&#x27;↓ Pull &amp; tear · I’m taking this list&#x27;}&lt;/button&gt;&lt;/div&gt;`}
+function render(next){page=next;root.querySelectorAll(&#x27;[data-page]&#x27;).forEach(b=&gt;b.classList.toggle(&#x27;active&#x27;,b.dataset.page===page));
+if(page===&#x27;home&#x27;)main.innerHTML=`&lt;section class=&quot;hm-page&quot;&gt;&lt;div class=&quot;hm-hero&quot;&gt;&lt;div&gt;&lt;div class=&quot;hm-eyebrow&quot;&gt;&lt;span class=&quot;hm-dot&quot;&gt;&lt;/span&gt;For the everyday business owner&lt;/div&gt;&lt;h1&gt;Big world.&lt;br&gt;Small business.&lt;br&gt;&lt;span style=&quot;color:light-dark(#72904d,#b0ce80)&quot;&gt;A little backup.&lt;/span&gt;&lt;/h1&gt;&lt;p class=&quot;hm-sub&quot;&gt;Rising costs? Uncertain times? Turn your business website into a short list of events worth keeping an eye on.&lt;/p&gt;&lt;button class=&quot;hm-primary&quot; data-go=&quot;intake&quot;&gt;Make my hedge ticket &lt;span&gt;↗&lt;/span&gt;&lt;/button&gt;&lt;div class=&quot;hm-note&quot;&gt;Just your company URL. No trading account needed here.&lt;/div&gt;&lt;/div&gt;${art}&lt;/div&gt;&lt;div class=&quot;hm-strip&quot;&gt;&lt;div&gt;&lt;span&gt;01 / TELL US&lt;/span&gt;&lt;b&gt;Your business, in one link.&lt;/b&gt;&lt;span&gt;We look for what could affect your costs and sales.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;02 / CHECK IT&lt;/span&gt;&lt;b&gt;You know your business best.&lt;/b&gt;&lt;span&gt;Correct our assumptions before making your list.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;03 / TAKE IT&lt;/span&gt;&lt;b&gt;One ticket. A few what-ifs.&lt;/b&gt;&lt;span&gt;Pull, tear, and keep the list. You decide what comes next.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;`;
+if(page===&#x27;intake&#x27;)main.innerHTML=`&lt;section class=&quot;hm-page&quot;&gt;&lt;div class=&quot;hm-step&quot;&gt;01 Business &amp;nbsp; → &amp;nbsp; 02 Risks &amp;nbsp; → &amp;nbsp; 03 Ticket&lt;/div&gt;&lt;h2&gt;Let’s start with your business.&lt;/h2&gt;&lt;p class=&quot;hm-help&quot;&gt;One link helps us ask better questions.&lt;/p&gt;&lt;div class=&quot;hm-split&quot;&gt;&lt;form class=&quot;hm-panel&quot; id=&quot;hm-form&quot;&gt;&lt;label class=&quot;hm-label&quot; for=&quot;hm-url&quot;&gt;Company website&lt;/label&gt;&lt;input id=&quot;hm-url&quot; type=&quot;text&quot; placeholder=&quot;yourbusiness.com&quot; required&gt;&lt;label class=&quot;hm-label&quot; for=&quot;hm-sector&quot;&gt;Sector &lt;span style=&quot;color:var(--hm-muted)&quot;&gt;· optional&lt;/span&gt;&lt;/label&gt;&lt;select id=&quot;hm-sector&quot;&gt;&lt;option&gt;Food &amp; beverage&lt;/option&gt;&lt;option&gt;Retail&lt;/option&gt;&lt;option&gt;Logistics&lt;/option&gt;&lt;option&gt;Manufacturing&lt;/option&gt;&lt;option&gt;Other / not sure&lt;/option&gt;&lt;/select&gt;&lt;div id=&quot;hm-error&quot; class=&quot;hm-error&quot; role=&quot;alert&quot;&gt;&lt;/div&gt;&lt;button class=&quot;hm-primary&quot; type=&quot;submit&quot;&gt;Review possible risks &lt;span&gt;→&lt;/span&gt;&lt;/button&gt;&lt;p class=&quot;hm-note&quot;&gt;Prototype: any valid URL opens an editable sample review. No website is scanned.&lt;/p&gt;&lt;/form&gt;&lt;div&gt;&lt;div class=&quot;hm-eyebrow&quot;&gt;A familiar example&lt;/div&gt;&lt;h3&gt;A kopi shop feels global changes, too.&lt;/h3&gt;&lt;p class=&quot;hm-help&quot;&gt;Coffee beans come by ship. Deliveries use fuel. A new outlet might have a loan.&lt;/p&gt;&lt;div class=&quot;hm-rule&quot;&gt;&lt;/div&gt;&lt;button class=&quot;hm-secondary&quot; id=&quot;hm-example&quot;&gt;Try Kopi &amp; Co. →&lt;/button&gt;&lt;p class=&quot;hm-note&quot;&gt;Fictional Singapore café · sample data&lt;/p&gt;&lt;div class=&quot;hm-alert&quot;&gt;We infer possible exposures, not facts. You’ll check what actually applies.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;`;
+if(page===&#x27;risks&#x27;)main.innerHTML=`&lt;section class=&quot;hm-page&quot;&gt;&lt;div class=&quot;hm-step&quot;&gt;✓ Business &amp;nbsp; → &amp;nbsp; 02 Risks &amp;nbsp; → &amp;nbsp; 03 Ticket&lt;/div&gt;&lt;h2&gt;Does this sound like your business?&lt;/h2&gt;&lt;p class=&quot;hm-help&quot;&gt;&lt;span class=&quot;hm-company&quot;&gt;&lt;/span&gt; · Sample assumptions for you to check&lt;/p&gt;&lt;div class=&quot;hm-split&quot;&gt;&lt;div class=&quot;hm-panel&quot;&gt;${risks.map((r,i)=&gt;`&lt;label class=&quot;hm-risk&quot;&gt;&lt;input type=&quot;checkbox&quot; data-risk=&quot;${i}&quot; ${selected[i]?&#x27;checked&#x27;:&#x27;&#x27;}&gt;&lt;span&gt;${r[0]}&lt;p&gt;${r[1]}&lt;/p&gt;&lt;/span&gt;&lt;span class=&quot;hm-tag&quot;&gt;${r[2]}&lt;/span&gt;&lt;/label&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;&lt;div&gt;&lt;div class=&quot;hm-eyebrow&quot;&gt;Your reality comes first&lt;/div&gt;&lt;h3&gt;Keep only what affects you.&lt;/h3&gt;&lt;p class=&quot;hm-help&quot;&gt;Untick a risk if your costs are fixed, you don’t borrow, or it simply doesn’t fit.&lt;/p&gt;&lt;div class=&quot;hm-alert&quot;&gt;&lt;b&gt;A related event is not a matching loss.&lt;/b&gt;&lt;br&gt;Oil could spike without your supplier raising prices. Your costs could also rise without the event happening. That gap is called basis risk.&lt;/div&gt;&lt;p class=&quot;hm-help&quot; id=&quot;hm-selection&quot;&gt;&lt;/p&gt;&lt;div class=&quot;hm-actions&quot;&gt;&lt;button class=&quot;hm-secondary&quot; data-go=&quot;intake&quot;&gt;Back&lt;/button&gt;&lt;button class=&quot;hm-primary&quot; id=&quot;hm-print&quot;&gt;Print sample ticket →&lt;/button&gt;&lt;/div&gt;&lt;p class=&quot;hm-note&quot;&gt;This concept shows 3 example events. A live ticket needs 3–7 suitable, liquid markets; otherwise we’d explain the shortfall.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;`;
+if(page===&#x27;ticket&#x27;)main.innerHTML=`&lt;section class=&quot;hm-page&quot;&gt;&lt;div class=&quot;hm-step&quot;&gt;✓ Business &amp;nbsp; → &amp;nbsp; ✓ Risks &amp;nbsp; → &amp;nbsp; 03 Ticket&lt;/div&gt;&lt;div class=&quot;hm-split&quot; style=&quot;margin-top:0&quot;&gt;&lt;div&gt;&lt;div class=&quot;hm-eyebrow&quot;&gt;&lt;span class=&quot;hm-dot&quot;&gt;&lt;/span&gt;${taken?&#x27;Yours to keep&#x27;:&#x27;Fresh from the printer&#x27;}&lt;/div&gt;&lt;h2&gt;${taken?&#x27;Ticket taken.&lt;br&gt;You’re in control.&#x27;:&#x27;Your next step,&lt;br&gt;on a small slip.&#x27;}&lt;/h2&gt;&lt;p class=&quot;hm-sub&quot;&gt;${taken?&#x27;You’ve saved a list to consider. Taking a ticket does not place a trade.&#x27;:&#x27;Three example events, the side to buy, and the gaps to understand. Pull the ticket when you’re ready to keep the list.&#x27;}&lt;/p&gt;&lt;div class=&quot;hm-alert&quot;&gt;&lt;b&gt;This ticket won’t cover every loss.&lt;/b&gt;&lt;br&gt;Event contracts pay $1 or $0 based on the event’s rules, not on how your business performs.&lt;/div&gt;&lt;details class=&quot;hm-detail&quot;&gt;&lt;summary&gt;How would a contract pay out?&lt;/summary&gt;&lt;p&gt;A YES contract pays $1 if the event resolves YES, otherwise $0. A NO contract does the reverse. Your purchase price and fees affect your profit or loss.&lt;/p&gt;&lt;/details&gt;&lt;details&gt;&lt;summary&gt;What should I check before buying?&lt;/summary&gt;&lt;p&gt;Read the exact resolution rules, date, available liquidity and price on the market. Check that the exposure applies to your business. These sample event names are not verified Polymarket listings.&lt;/p&gt;&lt;/details&gt;&lt;div class=&quot;hm-actions&quot;&gt;&lt;button class=&quot;hm-link&quot; data-go=&quot;risks&quot;&gt;← Edit risks&lt;/button&gt;${taken?&#x27;&lt;button class=&quot;hm-secondary&quot; data-go=&quot;saved&quot;&gt;View my tickets →&lt;/button&gt;&#x27;:&#x27;&#x27;}&lt;/div&gt;&lt;/div&gt;${receipt()}&lt;/div&gt;&lt;/section&gt;`;
+if(page===&#x27;saved&#x27;)main.innerHTML=`&lt;section class=&quot;hm-page&quot;&gt;&lt;div class=&quot;hm-eyebrow&quot;&gt;Your back pocket&lt;/div&gt;&lt;h2&gt;My tickets&lt;/h2&gt;&lt;p class=&quot;hm-help&quot;&gt;Lists you’ve taken. No trades placed.&lt;/p&gt;${taken?`&lt;div class=&quot;hm-panel hm-saved&quot;&gt;&lt;div&gt;&lt;span class=&quot;hm-tag&quot;&gt;TAKEN · SAMPLE&lt;/span&gt;&lt;h3 class=&quot;hm-company&quot; style=&quot;margin-top:10px&quot;&gt;&lt;/h3&gt;&lt;p class=&quot;hm-help&quot;&gt;Ticket 001 · 3 example events · Fuel, freight, rates&lt;/p&gt;&lt;/div&gt;&lt;button class=&quot;hm-secondary&quot; data-go=&quot;ticket&quot;&gt;Open ticket ↗&lt;/button&gt;&lt;/div&gt;&lt;p class=&quot;hm-note&quot;&gt;Saved only while this mockup is open.&lt;/p&gt;`:`&lt;div class=&quot;hm-empty&quot;&gt;&lt;h3&gt;Your first ticket belongs here.&lt;/h3&gt;&lt;p class=&quot;hm-help&quot; style=&quot;margin-bottom:22px&quot;&gt;Make a list, then pull and tear to keep it.&lt;/p&gt;&lt;button class=&quot;hm-primary&quot; data-go=&quot;intake&quot;&gt;Make a ticket →&lt;/button&gt;&lt;/div&gt;`}&lt;/section&gt;`;
+main.querySelectorAll(&#x27;.hm-company&#x27;).forEach(n=&gt;n.textContent=company);main.querySelectorAll(&#x27;[data-go]&#x27;).forEach(b=&gt;b.onclick=()=&gt;render(b.dataset.go));
+if(page===&#x27;intake&#x27;){main.querySelector(&#x27;#hm-sector&#x27;).value=sector;main.querySelector(&#x27;#hm-example&#x27;).onclick=()=&gt;{company=&#x27;Kopi &amp; Co.&#x27;;url=&#x27;kopiandco.example&#x27;;sector=&#x27;Food &amp; beverage&#x27;;render(&#x27;risks&#x27;)};main.querySelector(&#x27;#hm-form&#x27;).onsubmit=e=&gt;{e.preventDefault();let raw=main.querySelector(&#x27;#hm-url&#x27;).value.trim();try{const u=new URL(raw.includes(&#x27;://&#x27;)?raw:&#x27;https://&#x27;+raw);if(!u.hostname.includes(&#x27;.&#x27;)||![&#x27;https:&#x27;,&#x27;http:&#x27;].includes(u.protocol))throw Error();url=u.hostname;company=url.replace(/^www\./,&#x27;&#x27;);sector=main.querySelector(&#x27;#hm-sector&#x27;).value;render(&#x27;risks&#x27;)}catch{main.querySelector(&#x27;#hm-error&#x27;).textContent=&#x27;Enter a website such as yourbusiness.com.&#x27;}}}
+if(page===&#x27;risks&#x27;){const update=()=&gt;{let matching=selected.slice(0,3).filter(Boolean).length;main.querySelector(&#x27;#hm-selection&#x27;).textContent=matching===3?&#x27;3 example events available for the selected risks.&#x27;:`Only ${matching} sample matches. Select fuel, freight and rates to preview the 3-line ticket.`;main.querySelector(&#x27;#hm-print&#x27;).disabled=matching&lt;3};main.querySelectorAll(&#x27;[data-risk]&#x27;).forEach(c=&gt;c.onchange=()=&gt;{selected[+c.dataset.risk]=c.checked;update()});main.querySelector(&#x27;#hm-print&#x27;).onclick=()=&gt;{taken=false;root.querySelector(&#x27;#hm-count&#x27;).textContent=&#x27;0&#x27;;render(&#x27;ticket&#x27;)};update()}
+if(page===&#x27;ticket&#x27;)main.querySelector(&#x27;#hm-tear&#x27;).onclick=()=&gt;{taken=true;root.querySelector(&#x27;#hm-count&#x27;).textContent=&#x27;1&#x27;;render(&#x27;ticket&#x27;)};}
+root.querySelectorAll(&#x27;[data-page]&#x27;).forEach(b=&gt;b.onclick=()=&gt;render(b.dataset.page));render(&#x27;home&#x27;);const design={motion:true,accent:&#x27;#d8ef85&#x27;};if(globalThis.Tweak){const t=new Tweak({container:root,onChange:()=&gt;{root.classList.toggle(&#x27;motion-off&#x27;,!design.motion);root.style.setProperty(&#x27;--hm-accent&#x27;,design.accent)}});t.addToggle(design,&#x27;motion&#x27;,{label:&#x27;Neighbourhood animation&#x27;});}
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
