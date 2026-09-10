@@ -171,18 +171,57 @@ async function ticketPNG(){
   catch{return receiptFallbackPNG()}
 }
 function downloadData(url,name){const a=document.createElement('a');a.href=url;a.download=name;a.click()}
+function pngFileName(){return 'hedge-ticket-'+(company.name||'ticket').replace(/[^a-z0-9]+/gi,'-').slice(0,55)+'.png'}
+function dataUrlToFile(url,name){
+  const [head,b64]=url.split(',');
+  const mime=(head.match(/data:([^;]+)/)||[])[1]||'image/png';
+  const bin=atob(b64),bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+  return new File([bytes],name,{type:mime});
+}
+const tweetText='Hedge your business risks via #hedgemarkets on hedgemarkets.io';
 async function savePNG(){
   const btn=main.querySelector('#hm-png'),note=main.querySelector('#hm-share-status');
   if(btn){btn.disabled=true;btn.textContent='Saving PNG…'}
   try{
     const url=await ticketPNG();
-    downloadData(url,'hedge-ticket-'+(company.name||'ticket').replace(/[^a-z0-9]+/gi,'-').slice(0,55)+'.png');
+    downloadData(url,pngFileName());
     if(note)note.textContent='Saved the ticket as it appears on screen.';
   }catch(e){
     if(note)note.textContent=e.message||'Could not save the ticket image.';
     throw e;
   }finally{
     if(btn){btn.disabled=false;btn.textContent='Save as PNG ↓'}
+  }
+}
+async function shareOnX(){
+  const btn=main.querySelector('#hm-share-x'),note=main.querySelector('#hm-share-status');
+  if(btn){btn.disabled=true;btn.textContent='Preparing share…'}
+  try{
+    const url=await ticketPNG();
+    const file=dataUrlToFile(url,pngFileName());
+    const payload={title:'hedge markets',text:tweetText,url:'https://hedgemarkets.io',files:[file]};
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share(payload);
+      if(note)note.textContent='Shared. Choose X in the sheet so the receipt goes with the post.';
+      return;
+    }
+    if(navigator.clipboard&&globalThis.ClipboardItem){
+      try{
+        await navigator.clipboard.write([new ClipboardItem({'image/png':file})]);
+        window.open('https://x.com/intent/tweet?'+new URLSearchParams({text:tweetText,url:'https://hedgemarkets.io'}),'_blank','noopener,noreferrer');
+        if(note)note.textContent='Receipt copied. Paste it into the X draft (⌘V or Ctrl+V), then post.';
+        return;
+      }catch{}
+    }
+    downloadData(url,file.name);
+    window.open('https://x.com/intent/tweet?'+new URLSearchParams({text:tweetText,url:'https://hedgemarkets.io'}),'_blank','noopener,noreferrer');
+    if(note)note.textContent='PNG downloaded. Attach it to the X draft, then post.';
+  }catch(e){
+    if(e&&e.name==='AbortError'){if(note)note.textContent='Share cancelled.';return}
+    if(note)note.textContent=e.message||'Could not share the ticket.';
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Share on X ↗'}
   }
 }
 function saveTicket(){
@@ -226,7 +265,7 @@ function bindReceipt(){
     else if(e.key==='ArrowDown'){receiptPos.y+=step;apply();e.preventDefault()}
   };
 }
-function exportControls(){return '<div class="claim-actions" style="margin-top:18px"><button class="secondary" id="hm-png">Save as PNG ↓</button><button class="secondary" id="hm-share-x">Share on X ↗</button><p class="fine" id="hm-share-status" aria-live="polite">Share on X downloads the PNG and opens a draft. Attach the image before posting.</p></div>'}
+function exportControls(){return '<div class="claim-actions" style="margin-top:18px"><button class="secondary" id="hm-png">Save as PNG ↓</button><button class="secondary" id="hm-share-x">Share on X ↗</button><p class="fine" id="hm-share-status" aria-live="polite">Share on X attaches the receipt when your device allows it.</p></div>'}
 function tokenFor(line,side){const i=(line.outcomes||[]).indexOf(side);return i>=0?String((line.tokens||[])[i]||''):''}
 function canTrade(line){const side=line.side||(line.outcomes||[])[0];return Array.isArray(line.outcomes)&&line.outcomes.length>=1&&Array.isArray(line.tokens)&&line.tokens.length>=1&&tokenFor(line,side)}
 function quoteBits(l){const q=l.quote||{};if(q.ask==null)return 'No live quote (thin book or no order book).';return `Best ask $${Number(q.ask).toFixed(3)} · ${esc(new Date(q.checkedAt||Date.now()).toLocaleString())}<br>$${Number(q.askDepthWithin5c||0).toFixed(2)} of asks within 5¢ · Spread ${q.spread==null?'—':'$'+Number(q.spread).toFixed(3)}${q.eligible?'':' · shown even though the book is thin or wide'}`}
@@ -333,7 +372,7 @@ main.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{if(b.disabled)retur
 if(p==='home'){const h=main.querySelector('.hero');main.querySelector('#hm-start').onclick=()=>main.querySelector('#hm2-query').focus();main.querySelector('#hm-motion').onclick=()=>{motion=!motion;render('home')};h.onpointermove=e=>{if(!motion||e.pointerType==='touch')return;const r=h.getBoundingClientRect();h.classList.remove('idle');h.style.setProperty('--px',((e.clientX-r.left)/r.width-.5)*-15+'px');h.style.setProperty('--py',((e.clientY-r.top)/r.height-.5)*-8+'px')};h.onpointerleave=()=>h.classList.add('idle');main.querySelector('#hm2-form').onsubmit=async e=>{e.preventDefault();if(busy)return;const query=main.querySelector('#hm2-query').value.trim();if(!query)return;busy=true;error='';company={query,name:query};render('home');try{company=await api('/api/analyze',{query,country},35000);currentId=null;lines=[];gaps=[];elsewhere=[];desk=[];busy=false;render('review')}catch(e){error=e.name==='TimeoutError'?'Lookup took too long. Please retry.':(e.message||'Lookup failed.');busy=false;render('home')}}}
 if(p==='review'){main.querySelectorAll('[data-risk]').forEach(i=>i.onchange=()=>{company.risks[+i.dataset.risk].selected=i.checked;main.querySelector('#hm-match').disabled=!company.risks.some(r=>r.selected)});main.querySelector('#hm-match').onclick=async()=>{if(busy)return;busy=true;error='';render('review');try{const result=await api('/api/match',{company:{name:company.name,url:company.url,country,source:company.source,sourceLabel:company.sourceLabel,productFamily:company.productFamily,whatItDoes:company.whatItDoes},risks:company.risks.filter(r=>r.selected)},55000);lines=result.lines||[];gaps=result.gaps||[];elsewhere=result.elsewhere||[];resetDesk();error=result.reason;busy=false;render('matches')}catch(e){busy=false;error=e.name==='TimeoutError'?'Matching live markets took too long. Please retry.':(e.message||'Matching failed.');render('review')}}}
 if(p==='ticket'||p==='claim'){bindTradeDesk();bindReceipt()}
-const png=main.querySelector('#hm-png');if(png)png.onclick=()=>savePNG().catch(()=>{});const share=main.querySelector('#hm-share-x');if(share)share.onclick=async()=>{try{await savePNG()}catch{return}const text='My business risk shortlist for '+company.name.slice(0,60)+'. Not insurance: event outcomes may not offset business losses. #HedgeMarkets';window.open('https://x.com/intent/tweet?'+new URLSearchParams({text}),'_blank','noopener,noreferrer');const statusEl=main.querySelector('#hm-share-status');if(statusEl)statusEl.textContent='PNG downloaded. Attach it to your X draft, then review and post.'};
+const png=main.querySelector('#hm-png');if(png)png.onclick=()=>savePNG().catch(()=>{});const share=main.querySelector('#hm-share-x');if(share)share.onclick=()=>shareOnX();
 const dl=main.querySelector('#hm-download');if(dl)dl.onclick=()=>{const content=main.querySelector('.receipt').innerText+'\n\n'+lines.map(l=>l.url).join('\n');const u=URL.createObjectURL(new Blob([content],{type:'text/plain'}));const a=document.createElement('a');a.href=u;a.download='hedge-ticket.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
 main.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{const t=tickets.find(t=>t.id===b.dataset.open);company=t.company;lines=t.lines;gaps=t.gaps||[];elsewhere=t.elsewhere||[];country=t.country;currentId=t.id;receiptPos={x:0,y:0};resetDesk();render('claim')});if(globalThis.lucide)lucide.createIcons({attrs:{width:16,height:16}})
 }
